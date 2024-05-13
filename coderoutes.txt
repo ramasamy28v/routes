@@ -1,0 +1,64 @@
+const distances = [
+  {
+    start: 'chennai',
+    end: 'viluppuram',
+    distance: 166,
+  },
+  {
+    start: 'viluppuram',
+    end: 'trichy',
+    distance: 165,
+  },
+  {
+    start: 'trichy',
+    end: 'madurai',
+    distance: 138,
+  },
+  {
+    start: 'madurai',
+    end: 'thirunelveli',
+    distance: 171,
+  },
+  {
+    start: 'thirunelveli',
+    end: 'kanyakumari',
+    distance: 85,
+  },
+  {
+    start: 'karur',
+    end: 'trichy',
+    distance: 83,
+  },
+];
+
+const routes = [
+  {
+    start: 'chennai',
+    end: 'trichy',
+    stops: ['chennai', 'viluppuram', 'trichy'],
+  },
+  {
+    start: 'chennai',
+    end: 'karur',
+    stops: ['chennai', 'viluppuram', 'trichy', 'karur'],
+  },
+  {
+    start: 'trichy',
+    end: 'thirunelveli', 
+    stops: ['trichy', 'madurai', 'thirunelveli'],
+  },
+];
+
+const mapRoutes = routes.map(route => {
+  const totalDistance = route.stops.reduce((acc, stop, index, stops) => {
+    const nextStop = stops[index + 1];
+    const distanceAll = distances.find(dist =>
+      (dist.start === stop && dist.end === nextStop) || (dist.start === nextStop && dist.end === stop)
+    );
+    return acc + (distanceAll?.distance || 0); 
+  }, 0);
+
+  return { ...route, totalDistance };
+});
+
+console.log(mapRoutes); 
